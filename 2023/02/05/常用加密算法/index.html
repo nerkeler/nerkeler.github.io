@@ -1,0 +1,810 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/blog.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="nerkeler">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="常用加密算法Base64Base64编码简介Base64是一种编码方式,这个术语最初是在“MIME内容传输编码规范”中提出的。Base64不是一种加密算法，它实际上是一种“二进制转换到文本”的编码方式，它能够将任意二进制数据转换为ASCII字符串的形式，以便在只支持文本的环境中也能够顺利地传输二进制数据。  base64编码：把二进制数据转换为字符 base64接码：把字符转为二进制数据  这看起">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常用加密算法">
+<meta property="og:url" content="http://example.com/2023/02/05/%E5%B8%B8%E7%94%A8%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="nerkeler&#39;s blog">
+<meta property="og:description" content="常用加密算法Base64Base64编码简介Base64是一种编码方式,这个术语最初是在“MIME内容传输编码规范”中提出的。Base64不是一种加密算法，它实际上是一种“二进制转换到文本”的编码方式，它能够将任意二进制数据转换为ASCII字符串的形式，以便在只支持文本的环境中也能够顺利地传输二进制数据。  base64编码：把二进制数据转换为字符 base64接码：把字符转为二进制数据  这看起">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.postimg.cc/rmJs7r3h/gratisography-cool-balloon-free-stock-photo.jpg">
+<meta property="article:published_time" content="2023-02-05T05:45:00.000Z">
+<meta property="article:modified_time" content="2023-02-06T04:05:47.407Z">
+<meta property="article:author" content="nerkeler">
+<meta property="article:tag" content="md5">
+<meta property="article:tag" content="sha256">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://i.postimg.cc/rmJs7r3h/gratisography-cool-balloon-free-stock-photo.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>常用加密算法 - nerkeler&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"p1nZWgvcBos2H14F7kefHpaQ-gzGzoHsz","app_key":"MLYPcSdvgPUOtVStvTZ0ife3","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>nerkeler&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.xjh.me/random_img.php?type=bg&ctype=nature&return=302') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="常用加密算法"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-02-05 13:45" pubdate>
+          2023年2月5日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          62 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">常用加密算法</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="常用加密算法"><a href="#常用加密算法" class="headerlink" title="常用加密算法"></a>常用加密算法</h2><h3 id="Base64"><a href="#Base64" class="headerlink" title="Base64"></a>Base64</h3><h4 id="Base64编码简介"><a href="#Base64编码简介" class="headerlink" title="Base64编码简介"></a>Base64编码简介</h4><p>Base64是一种编码方式,这个术语最初是在“MIME内容传输编码规范”中提出的。Base64不是一种加密算法，它实际上是一种“二进制转换到文本”的编码方式，它能够将任意二进制数据转换为ASCII字符串的形式，以便在只支持文本的环境中也能够顺利地传输二进制数据。</p>
+<ul>
+<li>base64编码：把二进制数据转换为字符</li>
+<li>base64接码：把字符转为二进制数据</li>
+</ul>
+<p>这看起来可能有些奇怪，因为大多数的编码都是由字符转化成二进制的过程，而从二进制转成字符的过程称为解码。而Base64的概念就恰好反了，由二进制转到字符称为编码，由字符到二进制称为解码。</p>
+<h4 id="Base64编码由来"><a href="#Base64编码由来" class="headerlink" title="Base64编码由来"></a>Base64编码由来</h4><p>因为有些网络传输渠道并不支持所有字节，例如传统的邮件只支持可见字符的传输，像<a href="id=#jump">ASCII</a>码的控制字符（<a href="id=#jump">ASCII</a>包含了 128 个字符。其中前 32 个， 0-31 ，即 0x00-0x1F ，都是不可见字符。这些字符，就叫做控制字符。）就不能通过邮件传输。另外，例如图片二进制流的每个字节不可能全部都是可见字符，所以就传送不了。</p>
+<p>最好的方法就是在不改变传统协议的情况下，做一种扩展方案来支持二进制文件的传送，把不可能打印的字符用可打印的字符标识，问题就解决了。Base64编码就应运而生，Base64就是一种基于64个可打印字符来表示二进制数据的表示方法</p>
+<h4 id="Base64编码原理"><a href="#Base64编码原理" class="headerlink" title="Base64编码原理"></a><strong>Base64编码原理</strong></h4><p>Base64编码索引表，字符选用了“A-Z 、 a-z 、 0-9、+、 &#x2F; ”64个可打印字符。数字代表字符索引，这个是标准Base64标准协议规定的，不能更改。64个字节用6个bit位就可以全部表示（32+16+8+4+2+1）就可以全部表示。这里注意一个Base64字符是8个bit，但有效部分只有右边6个bit，左边两个永远是0。</p>
+<p>***PS:***Base64编码有效位为6bit,左边两个为0，也就是00xxxxxx形式，而一个字符表示8bit,所以Base64在编码时可能会遇到bit位不足得情况，这种情况下会在字符后补充&#x3D;</p>
+<h5 id="JAVA代码-JDK8-实现："><a href="#JAVA代码-JDK8-实现：" class="headerlink" title="JAVA代码 JDK8 实现："></a>JAVA代码 JDK8 实现：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.util.Base64;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">jdk</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-type">String</span> <span class="hljs-variable">s</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;兔年顶呱呱&quot;</span>;<br>    <span class="hljs-type">byte</span>[] encode = Base64.getEncoder().encode(s.getBytes(UTF_8));<br>    System.out.println(<span class="hljs-string">&quot;encode: &quot;</span>+ <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>(encode,UTF_8)); <span class="hljs-comment">// 输出为:5YWU5bm06aG25ZGx5ZGx</span><br><br>    <span class="hljs-type">String</span> <span class="hljs-variable">asB64</span> <span class="hljs-operator">=</span> Base64.getEncoder().encodeToString(<span class="hljs-string">&quot;some string&quot;</span>.getBytes(<span class="hljs-string">&quot;utf-8&quot;</span>));<br>    System.out.println(asB64); <span class="hljs-comment">// 输出为: c29tZSBzdHJpbmc=</span><br><br>    <span class="hljs-type">byte</span>[] decode = Base64.getDecoder().decode(encode);<br>    <span class="hljs-type">String</span> <span class="hljs-variable">s1</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>(decode, UTF_8);<br>    System.out.println(<span class="hljs-string">&quot;decode: &quot;</span>+ s1);<span class="hljs-comment">//decode: 兔年顶呱呱</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><em><code>Base64.getEncoder().encodeToString</code></em>  等效于  <em>Base64.getEncoder().encode + new String(s,”UTF_8”)</em></p>
+<h5 id="JAVA代码Apache工具包实现"><a href="#JAVA代码Apache工具包实现" class="headerlink" title="JAVA代码Apache工具包实现"></a>JAVA代码Apache工具包实现</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">base64</span><span class="hljs-params">()</span>&#123;<br>     String s=<span class="hljs-string">&quot;2023兔年大吉&quot;</span>;<br>     <span class="hljs-type">byte</span>[] bytes = Base64.encodeBase64(StringUtils.getBytesUtf8(s));<br>     System.out.println(<span class="hljs-string">&quot;encode: &quot;</span> + StringUtils.newStringUtf8(bytes));<br><br>     <span class="hljs-type">byte</span>[] bytes1 = Base64.decodeBase64(StringUtils.newStringUtf8(bytes));<br>     System.out.println(<span class="hljs-string">&quot;decode:&quot;</span> +StringUtils.newStringUtf8(bytes1));<br><br> &#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h5 id="Python代码实现："><a href="#Python代码实现：" class="headerlink" title="Python代码实现："></a>Python代码实现：</h5><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">import</span> base64<br><br>s = <span class="hljs-string">&quot;hello world&quot;</span>.encode()<br>encode = base64.b64encode(s)<br><span class="hljs-built_in">print</span>(encode.decode())<br>decode = base64.b64decode(encode)<br><span class="hljs-built_in">print</span>(decode.decode())<br><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">输出：</span><br><span class="hljs-string">    aGVsbG8gd29ybGQ=</span><br><span class="hljs-string">    hello world</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="URLEncode"><a href="#URLEncode" class="headerlink" title="URLEncode"></a>URLEncode</h2><h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><ul>
+<li>当字符串数据以<code>url</code>的形式传递给web服务器时,字符串中是不允许出现空格和特殊字符</li>
+<li>因为 <code>url</code> 对字符有限制，比如把一个邮箱放入 <code>url</code>，就需要使用 <code>urlencode</code> 函数，因为 <code>url</code> 中不能包含 <code>@</code> 字符。</li>
+<li><code>url</code>转义其实也只是为了符合<code>url</code>的规范而已。因为在标准的<code>url</code>规范中中文和很多的字符是不允许出现在<code>url</code>中</li>
+</ul>
+<h4 id="URLEncode原理"><a href="#URLEncode原理" class="headerlink" title="URLEncode原理"></a>URLEncode原理</h4><p>取出字符的ASCII码，转成16进制，然后前面加上百分号即可。如果是多字节的字符，则取出每一字节，按照同样的规则进行转换</p>
+<p>如问号<code>?</code>的ASCII码为<code>63</code>，转换为16进制为<code>3F</code>，所以<code>%3F</code>即为<code>?</code>进行<code>Urlencode</code>编码的结果</p>
+<h5 id="JAVA"><a href="#JAVA" class="headerlink" title="JAVA"></a>JAVA</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java">    <span class="hljs-meta">@Test</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">url</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> UnsupportedEncodingException &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">s</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;梦断香消四十年，沈园柳老不吹绵。&quot;</span>;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">encode</span> <span class="hljs-operator">=</span> URLEncoder.encode(s, UTF_8);<br>        System.out.println(<span class="hljs-string">&quot;encode: &quot;</span>+ encode);<br><br>        <span class="hljs-type">String</span> <span class="hljs-variable">decode</span> <span class="hljs-operator">=</span> URLDecoder.decode(encode, UTF_8);<br>        System.out.println(<span class="hljs-string">&quot;decode:&quot;</span> + decode);<br><br>    &#125;<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">encode: %E6%A2%A6%E6%96%AD%E9%A6%99%E6%B6%88%E5%9B%9B%E5%8D%81%E5%B9%B4%EF%BC%8C%E6%B2%88%E5%9B%AD%E6%9F%B3%E8%80%81%E4%B8%8D%E5%90%B9%E7%BB%B5%E3%80%82</span><br><span class="hljs-comment">decode:梦断香消四十年，沈园柳老不吹绵。</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span>  urllib.parse<br><br><br>parse = <span class="hljs-string">&quot;茨菰叶烂别西湾，莲子花开犹未还。&quot;</span><br>poem = &#123;<br>    <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;《江南行》&quot;</span>,<br>    <span class="hljs-string">&quot;author&quot;</span>: <span class="hljs-string">&quot;张潮&quot;</span><br>&#125;<br>encode_poem = urllib.parse.urlencode(poem) 			<span class="hljs-comment">#对字典进行编码</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;encode_poem: <span class="hljs-subst">&#123;encode_poem&#125;</span>&#x27;</span>)<br><br>decode_poem = urllib.parse.unquote(encode_poem) 	<span class="hljs-comment">#解码</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;decode: <span class="hljs-subst">&#123;decode_poem&#125;</span>&#x27;</span>)<br><br><br>encode = urllib.parse.quote(parse) 					<span class="hljs-comment">#对字符串进行编码</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;encode: &quot;</span> + encode)<br><br>decode = urllib.parse.unquote(encode) 				<span class="hljs-comment">#解码</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;decode: <span class="hljs-subst">&#123;decode&#125;</span>&#x27;</span>)<br><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">encode_poem: name=%E3%80%8A%E6%B1%9F%E5%8D%97%E8%A1%8C%E3%80%8B&amp;author=%E5%BC%A0%E6%BD%AE</span><br><span class="hljs-string">decode: name=《江南行》&amp;author=张潮</span><br><span class="hljs-string">encode: %E8%8C%A8%E8%8F%B0%E5%8F%B6%E7%83%82%E5%88%AB%E8%A5%BF%E6%B9%BE%EF%BC%8C%E8%8E%B2%E5%AD%90%E8%8A%B1%E5%BC%80%E7%8A%B9%E6%9C%AA%E8%BF%98%E3%80%82</span><br><span class="hljs-string">decode: 茨菰叶烂别西湾，莲子花开犹未还。</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="MD5"><a href="#MD5" class="headerlink" title="MD5"></a>MD5</h2><h4 id="MD5简介"><a href="#MD5简介" class="headerlink" title="MD5简介"></a>MD5简介</h4><p>MD5加密全程是Message-Digest <code>Algoorithm</code> 5（信息-摘要 算法），它对信息进行摘要采集，再通过一定的位运算，最终获取加密后的MD5字符串。</p>
+<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><ul>
+<li>针对不同长度待加密的数据、字符串等等，其都可以返回一个固定长度的MD5加密字符串。（通常32位的16进制字符串）；</li>
+<li>其加密过程几乎不可逆，除非维护一个庞大的Key-Value数据库来进行碰撞破解，否则几乎无法解开。</li>
+<li>运算简便，且可实现方式多样，通过一定的处理方式也可以避免碰撞算法的破解。</li>
+<li>对于一个固定的字符串。数字等等，MD5加密后的字符串是固定的，也就是说不管MD5加密多少次，都是同样的结果。</li>
+</ul>
+<h4 id="md5原理"><a href="#md5原理" class="headerlink" title="md5原理"></a>md5原理</h4><p>1、对编码文本bit位数对512取模，要求%512&#x3D;448，不足位在原始位后先加1后补0，直到满足条件</p>
+<p>512bit&#x2F;8 &#x3D; 64位,也就是最后返回得固定位数，余448是为了在后面（512-448&#x3D;）64bit放入原始长度</p>
+<p>2、在这个结果后面附加一个以64位二进制表示的填充前信息长度（单位为Bit），如果二</p>
+<p>进制表示的填充前信息长度超过64位，则取低64位。</p>
+<p>3、经过这两步的处理，信息的位长&#x3D;N<em>512+448+64&#x3D;(N+1）</em>512，即长度恰好是512的整数倍。这样做的原因是为满足后面处理中对信息长度的要求。</p>
+<p>4、MD5的实现需要每512个字节进行一次处理，后一次处理的输入为前一次处理的输出，因此，在循环处理开始之前，需要拿4个标准数作为输入，它们分别是：</p>
+<p><code>A=0x67452301,B=0xefcdab89,C=0x98badcfe,D=0x10325476;</code></p>
+<p>5、进行N轮循环处理，将最后的结果输出</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java">通过上面的标准128bit 输入，参与每组512bit 计算，得到一个新的<span class="hljs-number">128</span>值，接着参与下一轮循环运算，最终得到一个<span class="hljs-number">128</span>位的值；<br>具体运算：<br>这里用到<span class="hljs-number">4</span> 个逻辑函数F,G,H,I，分别对应<span class="hljs-number">4</span> 轮运算，它们将参与运算。（<span class="hljs-number">4</span>轮<span class="hljs-number">16</span>步）<br>第一轮逻辑函数：F(b,c,d)=(b&amp;c)|((~b)&amp;d) 参与第一轮的<span class="hljs-number">16</span> 步运算 (b,c,d均为<span class="hljs-number">32</span>位数)<br>第二轮逻辑函数：G(b,c,d)=(b&amp;d)|(c&amp;(~d)) 参与第二轮的<span class="hljs-number">16</span> 步运算<br>第三轮逻辑函数：H(b,c,d)= bcd 参与第三轮的<span class="hljs-number">16</span> 步运算<br>第四轮逻辑函数：I(b,c,d)= c^(b|(~d)) 参与第四轮的<span class="hljs-number">16</span> 步运算<br>再引入一个移位函数MOVE(X,n)，它将整型变量X 左循环移n 位，如变量X 为<span class="hljs-number">32</span> 位，则MOVE(X,n)= (X<br>&lt;&lt; n) | (X &gt;&gt; (<span class="hljs-number">32</span> - n))。<br></code></pre></td></tr></table></figure>
+
+<h4 id="JAVA代码实现"><a href="#JAVA代码实现" class="headerlink" title="JAVA代码实现"></a>JAVA代码实现</h4><p><code>Apache.commons</code><em>工具包</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testMD5</span><span class="hljs-params">()</span> &#123;<br>      <span class="hljs-type">String</span> <span class="hljs-variable">poem</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;宿空房，秋夜长，夜长无寐天不明。&quot;</span>;<br>      <span class="hljs-comment">// 基于apache.commons框架中的DigestUtils工具类进行密码加密</span><br>      <span class="hljs-type">String</span> <span class="hljs-variable">encode</span> <span class="hljs-operator">=</span> DigestUtils.md5Hex(poem.getBytes());<br><br>      System.out.println(encode);<br>  &#125;<br></code></pre></td></tr></table></figure>
+
+<p><em>JDK</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">char</span>[] HEX_CHARS = <span class="hljs-string">&quot;0123456789abcdef&quot;</span>.toCharArray();<br><br><span class="hljs-meta">@Test</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test01</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> NoSuchAlgorithmException &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">poem</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;习习谷风，维山崔嵬&quot;</span>;<br>        <span class="hljs-type">MessageDigest</span> <span class="hljs-variable">md5</span> <span class="hljs-operator">=</span> MessageDigest.getInstance(<span class="hljs-string">&quot;MD5&quot;</span>);<br>        <span class="hljs-type">byte</span>[] digest = md5.digest(poem.getBytes(UTF_8));<br>        System.out.println(hexToStr(digest));<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> String <span class="hljs-title function_">hexToStr</span><span class="hljs-params">(<span class="hljs-type">byte</span>[] bytes)</span> &#123;<br><span class="hljs-comment">//        897b01ff2de4733038564c342d59252d</span><br>        <span class="hljs-type">StringBuilder</span> <span class="hljs-variable">str</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>(bytes.length * <span class="hljs-number">2</span>);<br>        <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-variable">fifteen</span> <span class="hljs-operator">=</span> <span class="hljs-number">0x0f</span>;<span class="hljs-comment">//十六进制中的 15</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">byte</span> b : bytes) &#123;<span class="hljs-comment">//byte 为 32 位</span><br>            str.append(HEX_CHARS[(b &gt;&gt; <span class="hljs-number">4</span>) &amp; fifteen]);<span class="hljs-comment">//高四位</span><br>            str.append(HEX_CHARS[b &amp; fifteen]);<span class="hljs-comment">//低四位</span><br>        &#125;<br>        <span class="hljs-keyword">return</span> str.toString();<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="SHA256和SHA512"><a href="#SHA256和SHA512" class="headerlink" title="SHA256和SHA512"></a>SHA256和SHA512</h3><p>SHA-256信息摘要算法，也是一种<strong>密码散列函数</strong>对于任意长度的消息，SHA256都会产生一个256bit长的散列值（哈希值）用于确保信息传输完整一致，称作消息摘要。这个摘要相当于是个长度为32个字节的数组，通常用一个长度为64的十六进制字符串来表示</p>
+<p>SHA-512同理</p>
+<p>原理同md5相似</p>
+<h4 id="SHA256代码实现"><a href="#SHA256代码实现" class="headerlink" title="SHA256代码实现"></a>SHA256代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">hashUtil</span> &#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">char</span>[] HEX_CHARS = <span class="hljs-string">&quot;0123456789abcdef&quot;</span>.toCharArray();<br><br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title function_">hexToStr</span><span class="hljs-params">(<span class="hljs-type">byte</span>[] bytes)</span> &#123;<br>        <span class="hljs-type">StringBuilder</span> <span class="hljs-variable">str</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>(bytes.length * <span class="hljs-number">2</span>);<br>        <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-variable">fifteen</span> <span class="hljs-operator">=</span> <span class="hljs-number">0x0f</span>;<span class="hljs-comment">//十六进制中的 15</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">byte</span> b : bytes) &#123;<span class="hljs-comment">//byte 为 32 位</span><br>            str.append(HEX_CHARS[(b &gt;&gt; <span class="hljs-number">4</span>) &amp; fifteen]);<span class="hljs-comment">//高四位</span><br>            str.append(HEX_CHARS[b &amp; fifteen]);<span class="hljs-comment">//低四位</span><br>        &#125;<br>        <span class="hljs-keyword">return</span> str.toString();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//    JDK原生</span><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">sha256</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> NoSuchAlgorithmException &#123;<br><span class="hljs-comment">//        92dd9f6a5b38c773b7b6ac894d9538917d75674d18336aba8eaaa3742ada6a46</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">poem</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;当时轻别意中人，山长水远知何处&quot;</span>;<br>        <span class="hljs-type">MessageDigest</span> <span class="hljs-variable">encode</span> <span class="hljs-operator">=</span> MessageDigest.getInstance(<span class="hljs-string">&quot;SHA-256&quot;</span>);<br>        <span class="hljs-type">byte</span>[] digest = encode.digest(poem.getBytes(UTF_8));<br>        System.out.println(hashUtil.hexToStr(digest));<br>    &#125;<br>	<span class="hljs-comment">//apache工具包</span><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">apasha256</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">poem</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;当时轻别意中人，山长水远知何处&quot;</span>;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">encode</span> <span class="hljs-operator">=</span> DigestUtils.sha256Hex(poem.getBytes(UTF_8));<br>        System.out.println(encode);<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="SHA512-代码实现"><a href="#SHA512-代码实现" class="headerlink" title="SHA512 代码实现"></a>SHA512 代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//    JDK原生</span><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">sha512</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> NoSuchAlgorithmException &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">poem</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;当时轻别意中人，山长水远知何处&quot;</span>;<br>        <span class="hljs-type">MessageDigest</span> <span class="hljs-variable">encode</span> <span class="hljs-operator">=</span> MessageDigest.getInstance(<span class="hljs-string">&quot;SHA-512&quot;</span>);<br>        <span class="hljs-type">byte</span>[] digest = encode.digest(poem.getBytes(UTF_8));<br>        System.out.println(hashUtil.hexToStr(digest));<br>    &#125;<br><br><span class="hljs-comment">//    apache 工具包</span><br><span class="hljs-comment">//    c8da19b2c1b111952e338a73f71826ab6c759088c8e61093161d1112a632de75dc469a54ac6d98c0b84e460ed8911f5d5428d4aff812f39784b4763658efc292</span><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">apasha512</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">poem</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;当时轻别意中人，山长水远知何处&quot;</span>;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">encode</span> <span class="hljs-operator">=</span> DigestUtils.sha512Hex(poem.getBytes(UTF_8));<br>        System.out.println(encode);<br>    &#125;<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java/" class="category-chain-item">Java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/md5/">#md5</a>
+      
+        <a href="/tags/sha256/">#sha256</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>常用加密算法</div>
+      <div>http://example.com/2023/02/05/常用加密算法/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>nerkeler</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年2月5日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/02/17/%E3%80%8A%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3%E3%80%8B%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/" title="《算法图解》学习（一）">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">《算法图解》学习（一）</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/02/03/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" title="Hexo博客搭建">
+                        <span class="hidden-mobile">Hexo博客搭建</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"p1nZWgvcBos2H14F7kefHpaQ-gzGzoHsz","appKey":"MLYPcSdvgPUOtVStvTZ0ife3","path":"window.location.pathname","placeholder":"留言仅限讨论，禁止广告行为","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":true,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

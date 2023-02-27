@@ -1,0 +1,803 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/blog.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="nerkeler">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="EasyexcelEasyExcel是一个基于Java的简单、省内存的读写Excel的开源项目。在尽可能节约内存的情况下支持读写百M的Excel 项目github地址：https:&#x2F;&#x2F;github.com&#x2F;alibaba&#x2F;easyexcel  官网地址：https:&#x2F;&#x2F;easyexcel.opensource.alibaba.com&#x2F;docs&#x2F;current&#x2F; 先吐槽一下，官方文档写的太烂了，缺少">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EasyExcel学习">
+<meta property="og:url" content="http://example.com/2023/02/27/EasyExcel%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="nerkeler&#39;s blog">
+<meta property="og:description" content="EasyexcelEasyExcel是一个基于Java的简单、省内存的读写Excel的开源项目。在尽可能节约内存的情况下支持读写百M的Excel 项目github地址：https:&#x2F;&#x2F;github.com&#x2F;alibaba&#x2F;easyexcel  官网地址：https:&#x2F;&#x2F;easyexcel.opensource.alibaba.com&#x2F;docs&#x2F;current&#x2F; 先吐槽一下，官方文档写的太烂了，缺少">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.postimg.cc/W3RCpFt4/602165.jpg">
+<meta property="article:published_time" content="2023-02-27T01:13:00.000Z">
+<meta property="article:modified_time" content="2023-02-27T01:16:37.257Z">
+<meta property="article:author" content="nerkeler">
+<meta property="article:tag" content="excel">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://i.postimg.cc/W3RCpFt4/602165.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>EasyExcel学习 - nerkeler&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"p1nZWgvcBos2H14F7kefHpaQ-gzGzoHsz","app_key":"MLYPcSdvgPUOtVStvTZ0ife3","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>nerkeler&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.xjh.me/random_img.php?type=bg&ctype=nature&return=302') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="EasyExcel学习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-02-27 09:13" pubdate>
+          2023年2月27日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          70 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">EasyExcel学习</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="Easyexcel"><a href="#Easyexcel" class="headerlink" title="Easyexcel"></a>Easyexcel</h2><p>EasyExcel是一个基于Java的简单、省内存的读写Excel的开源项目。在尽可能节约内存的情况下支持读写百M的Excel</p>
+<p>项目github地址：<a target="_blank" rel="noopener" href="https://github.com/alibaba/easyexcel">https://github.com/alibaba/easyexcel</a> </p>
+<p>官网地址：<a target="_blank" rel="noopener" href="https://easyexcel.opensource.alibaba.com/docs/current/">https://easyexcel.opensource.alibaba.com/docs/current/</a></p>
+<p>先吐槽一下，官方文档写的太烂了，缺少依赖、逻辑不清晰、复制到idea很多跑起来报错</p>
+<h4 id="写Excel"><a href="#写Excel" class="headerlink" title="写Excel"></a>写Excel</h4><ul>
+<li>准备工作</li>
+</ul>
+<p>创建项目，在pom文件中添加以下依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">exclusions</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">exclusion</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.junit.vintage<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>junit-vintage-engine<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">exclusion</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">exclusions</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- easyexcel 依赖 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>easyexcel<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.2.7<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>创建一个实体类，用于写入excel</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Student</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Serializable</span> &#123;<br><br>    <span class="hljs-meta">@ExcelProperty(value = &#123;&quot;学生编号&quot;&#125;,order = 10)</span><br>    <span class="hljs-keyword">private</span> Integer id;<br><br>    <span class="hljs-meta">@ExcelProperty(value = &#123;&quot;学生姓名&quot;&#125;,order = 2)</span><br>    <span class="hljs-keyword">private</span> String name;<br><br>    <span class="hljs-meta">@ExcelProperty(value = &#123;&quot;学生薪水&quot;&#125;,order = 1)</span><br>    <span class="hljs-keyword">private</span> Double salary;<br><br>    <span class="hljs-meta">@ExcelProperty(value = &#123;&quot;学生生日&quot;&#125;,order = 11)</span><br>    <span class="hljs-keyword">private</span> Date birthday;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>最简单的写入</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//生成数据</span><br><span class="hljs-keyword">public</span> List&lt;Student&gt; <span class="hljs-title function_">getData</span><span class="hljs-params">()</span> &#123;<br>    List&lt;Student&gt; lists = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt;= <span class="hljs-number">10</span>; i++) &#123;<br>        <span class="hljs-type">Student</span> <span class="hljs-variable">student</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Student</span>();<br>        student.setId(i + <span class="hljs-number">1</span>);<br>        student.setName(<span class="hljs-string">&quot;李四&quot;</span> + i);<br>        student.setBirthday(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>());<br>        student.setSalary(<span class="hljs-number">1500.00D</span>);<br>        lists.add(student);<br>    &#125;<br>    <span class="hljs-keyword">return</span> lists;<br>&#125;<br><br><span class="hljs-comment">//最简单的写入</span><br><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">void</span> <span class="hljs-title function_">contextLoads</span><span class="hljs-params">()</span> &#123;<br>    EasyExcel.write(<span class="hljs-string">&quot;学生信息表.xlsx&quot;</span>, Student.class).sheet().doWrite(getData());<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><em>PS:一下方法都是有关最简单写入的具体方法解释，不感兴趣的可以跳过</em></p>
+<h5 id="write方法"><a href="#write方法" class="headerlink" title="write方法"></a>write方法</h5><p>代码解释：</p>
+<p><code>EasyExcel.write</code>源码如下：两个重载的方法，接收文件名（含路径）或文件名和Excel头文件</p>
+<p>，new 了一个ExcelWriterBuilder对象，将pathName或head写入excelWriterBuilder并返回</p>
+<ul>
+<li>pathName:文件名</li>
+<li>head:写入表格的class对象，如上方Student.class对象</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">EasyExcelFactory</span> &#123;<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 构建一个Excel写对象</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> ExcelWriterBuilder <span class="hljs-title function_">write</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ExcelWriterBuilder</span>();<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 构建一个Excel写对象</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> file 用来写出文件对象</span><br><span class="hljs-comment">     *            </span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> Excel writer builder</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> ExcelWriterBuilder <span class="hljs-title function_">write</span><span class="hljs-params">(File file)</span> &#123;<br>        <span class="hljs-keyword">return</span> write(file, <span class="hljs-literal">null</span>);<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 构建 Excel写对象</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> file</span><br><span class="hljs-comment">     *           用来写出的文件对象</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> head</span><br><span class="hljs-comment">     *          写出的数据类型的class对象</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> Excel writer builder</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> ExcelWriterBuilder <span class="hljs-title function_">write</span><span class="hljs-params">(File file, Class head)</span> &#123;<br>        <span class="hljs-type">ExcelWriterBuilder</span> <span class="hljs-variable">excelWriterBuilder</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ExcelWriterBuilder</span>();<br>        excelWriterBuilder.file(file);<br>        <span class="hljs-keyword">if</span> (head != <span class="hljs-literal">null</span>) &#123;<br>            excelWriterBuilder.head(head);<br>        &#125;<br>        <span class="hljs-keyword">return</span> excelWriterBuilder;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 构建Excel 写对象</span><br><span class="hljs-comment">     *   </span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> pathName</span><br><span class="hljs-comment">     *           写出的文件路径名</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> Excel writer builder</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> ExcelWriterBuilder <span class="hljs-title function_">write</span><span class="hljs-params">(String pathName)</span> &#123;<br>        <span class="hljs-keyword">return</span> write(pathName, <span class="hljs-literal">null</span>);<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 构建excel 写对象</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> pathName</span><br><span class="hljs-comment">     *            写出的文件路径名</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> head</span><br><span class="hljs-comment">     *            写出数据的数据类型的class对象</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> Excel writer builder</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> ExcelWriterBuilder <span class="hljs-title function_">write</span><span class="hljs-params">(String pathName, Class head)</span> &#123;<br>        <span class="hljs-type">ExcelWriterBuilder</span> <span class="hljs-variable">excelWriterBuilder</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ExcelWriterBuilder</span>();<br>        excelWriterBuilder.file(pathName);<br>        <span class="hljs-keyword">if</span> (head != <span class="hljs-literal">null</span>) &#123;<br>            excelWriterBuilder.head(head);<br>        &#125;<br>        <span class="hljs-keyword">return</span> excelWriterBuilder;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 构建excel写对象</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> outputStream</span><br><span class="hljs-comment">     *            写出的输出流对象</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> Excel writer builder</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> ExcelWriterBuilder <span class="hljs-title function_">write</span><span class="hljs-params">(OutputStream outputStream)</span> &#123;<br>        <span class="hljs-keyword">return</span> write(outputStream, <span class="hljs-literal">null</span>);<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 构建excel写对象</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> outputStream</span><br><span class="hljs-comment">     *           写出的输出流</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> head</span><br><span class="hljs-comment">     *           写出数据的数据类型的class对象</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> Excel writer builder</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> ExcelWriterBuilder <span class="hljs-title function_">write</span><span class="hljs-params">(OutputStream outputStream, Class head)</span> &#123;<br>        <span class="hljs-type">ExcelWriterBuilder</span> <span class="hljs-variable">excelWriterBuilder</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ExcelWriterBuilder</span>();<br>        excelWriterBuilder.file(outputStream);<br>        <span class="hljs-keyword">if</span> (head != <span class="hljs-literal">null</span>) &#123;<br>            excelWriterBuilder.head(head);<br>        &#125;<br>        <span class="hljs-keyword">return</span> excelWriterBuilder;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="sheet-方法"><a href="#sheet-方法" class="headerlink" title="sheet()方法"></a>sheet()方法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">void</span> <span class="hljs-title function_">contextLoads</span><span class="hljs-params">()</span> &#123;<br>    EasyExcel<br>        .write(<span class="hljs-string">&quot;学生信息表.xlsx&quot;</span>, Student.class)<br>        .sheet()<br>        .doWrite(getData());<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>sheet()方法代表要在excel那个sheet页写入数据，如果不指定，，默认写在第一个sheet页，默认sheet名：0</p>
+<p>源码解释：所有重载的方法可归为一个方法，接收sheetNo(第几个sheet（Integer）)，sheetName(sheet页名称(String))，返回ExcelWriterSheetBuilder</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/*</span><br><span class="hljs-comment">      选中第一个sheet页</span><br><span class="hljs-comment">      写操作 sheet 页的值为 0</span><br><span class="hljs-comment">  */</span><br>  <span class="hljs-keyword">public</span> ExcelWriterSheetBuilder <span class="hljs-title function_">sheet</span><span class="hljs-params">()</span> &#123;<br>      <span class="hljs-keyword">return</span> sheet(<span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>);<br>  &#125;<br><br>  <span class="hljs-comment">/*</span><br><span class="hljs-comment">      选中 第一个的 sheet页</span><br><span class="hljs-comment">      sheet 页的名字 为 sheetNo</span><br><span class="hljs-comment">  */</span>  <br>  <span class="hljs-keyword">public</span> ExcelWriterSheetBuilder <span class="hljs-title function_">sheet</span><span class="hljs-params">(Integer sheetNo)</span> &#123;<br>      <span class="hljs-keyword">return</span> sheet(sheetNo, <span class="hljs-literal">null</span>);<br>  &#125;<br><br>  <span class="hljs-comment">/*</span><br><span class="hljs-comment">      选中第一个的 sheet页</span><br><span class="hljs-comment">      sheet 页的名字 为 sheetName</span><br><span class="hljs-comment">  */</span>  <br>  <span class="hljs-keyword">public</span> ExcelWriterSheetBuilder <span class="hljs-title function_">sheet</span><span class="hljs-params">(String sheetName)</span> &#123;<br>      <span class="hljs-keyword">return</span> sheet(<span class="hljs-literal">null</span>, sheetName);<br>  &#125;<br><br>  <span class="hljs-comment">/*</span><br><span class="hljs-comment">      选中第一个 sheet页</span><br><span class="hljs-comment">      sheet 页的名字 为 sheetNo 或者 sheetName</span><br><span class="hljs-comment">  */</span><br>  <span class="hljs-keyword">public</span> ExcelWriterSheetBuilder <span class="hljs-title function_">sheet</span><span class="hljs-params">(Integer sheetNo, String sheetName)</span> &#123;<br>      <span class="hljs-type">ExcelWriter</span> <span class="hljs-variable">excelWriter</span> <span class="hljs-operator">=</span> build();<br>      <span class="hljs-type">ExcelWriterSheetBuilder</span> <span class="hljs-variable">excelWriterSheetBuilder</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ExcelWriterSheetBuilder</span>(excelWriter);<br>      <span class="hljs-keyword">if</span> (sheetNo != <span class="hljs-literal">null</span>) &#123;<br>          excelWriterSheetBuilder.sheetNo(sheetNo);<br>      &#125;<br>      <span class="hljs-keyword">if</span> (sheetName != <span class="hljs-literal">null</span>) &#123;<br>          excelWriterSheetBuilder.sheetName(sheetName);<br>      &#125;<br>      <span class="hljs-keyword">return</span> excelWriterSheetBuilder;<br>  <br></code></pre></td></tr></table></figure>
+
+<h5 id="doWrite方法"><a href="#doWrite方法" class="headerlink" title="doWrite方法"></a>doWrite方法</h5><p>源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">doWrite</span><span class="hljs-params">(List data)</span> &#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.excelWriter == <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ExcelGenerateException</span>(<span class="hljs-string">&quot;Must use &#x27;EasyExcelFactory.write().sheet()&#x27; to call this method&quot;</span>);<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-built_in">this</span>.excelWriter.write(data, <span class="hljs-built_in">this</span>.build());<br>            <span class="hljs-built_in">this</span>.excelWriter.finish();<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p>如上可见，doWrite方法只是简单判断了一下当前ExcelWriterSheetBuilder类是否为空，然后调用了write方法，再关闭excelWriter</p>
+<p>我们在深入看一下write方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> ExcelWriter <span class="hljs-title function_">write</span><span class="hljs-params">(List data, WriteSheet writeSheet)</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.write(data, (WriteSheet)writeSheet, (WriteTable)<span class="hljs-literal">null</span>);<br>&#125;<br><br><span class="hljs-keyword">public</span> ExcelWriter <span class="hljs-title function_">write</span><span class="hljs-params">(List data, WriteSheet writeSheet, WriteTable writeTable)</span> &#123;<br>    <span class="hljs-built_in">this</span>.excelBuilder.addContent(data, writeSheet, writeTable);<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>本质上这两个方法属于一个方法，都是接收三个参数，返回ExcelWriter对象</p>
+<ul>
+<li>List data: 要写入的数据</li>
+<li>WriteSheet writeSheet: doWrite方法返回ExcelWriterSheetBuilder中的一个属性，存放了sheet信息</li>
+<li>writeTable:  存放table信息，暂不讨论</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"> <span class="hljs-comment">/** <span class="hljs-doctag">@deprecated</span> */</span><br><span class="hljs-meta">@Deprecated</span><br><span class="hljs-keyword">public</span> ExcelWriter <span class="hljs-title function_">write</span><span class="hljs-params">(List data, Sheet sheet)</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.write(data, (Sheet)sheet, (Table)<span class="hljs-literal">null</span>);<br>&#125;<br><br><span class="hljs-comment">/** <span class="hljs-doctag">@deprecated</span> */</span><br><span class="hljs-meta">@Deprecated</span><br><span class="hljs-keyword">public</span> ExcelWriter <span class="hljs-title function_">write</span><span class="hljs-params">(List data, Sheet sheet, Table table)</span> &#123;<br>    <span class="hljs-type">WriteSheet</span> <span class="hljs-variable">writeSheet</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>    <span class="hljs-keyword">if</span> (sheet != <span class="hljs-literal">null</span>) &#123;<br>        writeSheet = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WriteSheet</span>();<br>        writeSheet.setSheetNo(sheet.getSheetNo() - <span class="hljs-number">1</span>);<br>        writeSheet.setSheetName(sheet.getSheetName());<br>        writeSheet.setClazz(sheet.getClazz());<br>        writeSheet.setHead(sheet.getHead());<br>        writeSheet.setTableStyle(sheet.getTableStyle());<br>        writeSheet.setRelativeHeadRowIndex(sheet.getStartRow());<br>        writeSheet.setColumnWidthMap(sheet.getColumnWidthMap());<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.write(data, writeSheet, writeTable);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>已过时方法，本质如上,根据return语句看，还是调用以上方法，</p>
+<h5 id="接着看一下addContent"><a href="#接着看一下addContent" class="headerlink" title="接着看一下addContent"></a>接着看一下addContent</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addContent</span><span class="hljs-params">(List data, WriteSheet writeSheet)</span> &#123;<br>    <span class="hljs-built_in">this</span>.addContent(data, writeSheet, (WriteTable)<span class="hljs-literal">null</span>);<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addContent</span><span class="hljs-params">(List data, WriteSheet writeSheet, WriteTable writeTable)</span> &#123;<br>    <span class="hljs-keyword">try</span> &#123;<br>        <span class="hljs-built_in">this</span>.context.currentSheet(writeSheet, WriteTypeEnum.ADD);<br>        <span class="hljs-built_in">this</span>.context.currentTable(writeTable);<br>        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.excelWriteAddExecutor == <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-built_in">this</span>.excelWriteAddExecutor = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ExcelWriteAddExecutor</span>(<span class="hljs-built_in">this</span>.context);<br>        &#125;<br><br>        <span class="hljs-built_in">this</span>.excelWriteAddExecutor.add(data);<br>    &#125; <span class="hljs-keyword">catch</span> (RuntimeException var5) &#123;<br>        <span class="hljs-built_in">this</span>.finishOnException();<br>        <span class="hljs-keyword">throw</span> var5;<br>    &#125; <span class="hljs-keyword">catch</span> (Throwable var6) &#123;<br>        <span class="hljs-built_in">this</span>.finishOnException();<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ExcelGenerateException</span>(var6);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>addContent接收了Excel原始数据，通过excelWriteAddExecutor.add写入，具体写入过程可看此方法</p>
+<h4 id="表头操作"><a href="#表头操作" class="headerlink" title="表头操作"></a>表头操作</h4><h5 id="属性注解"><a href="#属性注解" class="headerlink" title="属性注解"></a>属性注解</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Student</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Serializable</span> &#123;<br><br>    <span class="hljs-meta">@ExcelProperty(value = &#123;&quot;学生编号&quot;&#125;,order = 10)</span><br>    <span class="hljs-meta">@NumberFormat(&quot;#,###&quot;)</span><br>    <span class="hljs-keyword">private</span> Integer id;<br><br>    <span class="hljs-meta">@ExcelProperty(value = &#123;&quot;学生姓名&quot;&#125;,order = 2)</span><br>    <span class="hljs-keyword">private</span> String name;<br><br>    <span class="hljs-meta">@ExcelProperty(value = &#123;&quot;学生薪水&quot;&#125;,order = 1)</span><br>    <span class="hljs-meta">@ExcelIgnore</span><br>    <span class="hljs-keyword">private</span> Double salary;<br><br>    <span class="hljs-meta">@ExcelProperty(value = &#123;&quot;学生生日&quot;&#125;,order = 11)</span><br>    <span class="hljs-meta">@DateTimeFormat(&quot;yyyy-mm-dd&quot;)</span><br>    <span class="hljs-keyword">private</span> Date birthday;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如上所见，我们在每个属性上加入了@ExcelProperty注解，表示当前属性是一个excel字段，easyexcel采用了注解的方式定义excel 表头字段，给我们开发带来了极大的便利。</p>
+<ul>
+<li><code>ExcelProperty</code> index 指定写到第几列，默认根据成员变量排序。<code>value</code>指定写入的名称，默认成员变量的名字，多个<code>value</code>可以参照快速开始中的复杂头</li>
+<li><code>ExcelIgnore</code> 默认所有字段都会写入excel，这个注解会忽略这个字段</li>
+<li><code>DateTimeFormat</code> 日期转换，将<code>Date</code>写到excel会调用这个注解。里面的<code>value</code>参照<code>java.text.SimpleDateFormat</code></li>
+<li><code>NumberFormat</code> 数字转换，用<code>Number</code>写excel会调用这个注解。里面的<code>value</code>参照<code>java.text.DecimalFormat</code></li>
+<li><code>ExcelIgnoreUnannotated</code> 默认不加<code>ExcelProperty</code> 的注解的都会参与读写，加了不会参与</li>
+</ul>
+<p>还有其他注解，地址都在：com.alibaba.excel.annotation</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java/" class="category-chain-item">Java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/excel/">#excel</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>EasyExcel学习</div>
+      <div>http://example.com/2023/02/27/EasyExcel学习/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>nerkeler</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年2月27日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/02/17/%E3%80%8A%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3%E3%80%8B%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/" title="《算法图解》学习（一）">
+                        <span class="hidden-mobile">《算法图解》学习（一）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"p1nZWgvcBos2H14F7kefHpaQ-gzGzoHsz","appKey":"MLYPcSdvgPUOtVStvTZ0ife3","path":"window.location.pathname","placeholder":"留言仅限讨论，禁止广告行为","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":true,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

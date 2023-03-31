@@ -16,25 +16,26 @@
   <meta name="author" content="nerkeler">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Java 日期月份处理小工具类再sql的月份和日期查询中，可能会需要将日期或者月份相应推迟&#x2F;提前一天或一段时间，当然，这个逻辑放在sql中也是可以的，具体还是要看需求是否合适。分享三个小方法，一个是计算月份差、日期加减一&#x2F;多天、月份加减一&#x2F;多天 月份差输入参数： startMonth 字符串，格式应该为yyyy-MM对应下面SimpleDateFormat(&amp;quot">
+    <meta name="description" content="前言初学python时写的爬虫小程序，爬取动漫之家  《镖人》漫画所有文件到本地，单线程爬取，速度一般，如果用多线程会有很大速度提升，抽取爬虫逻辑可爬全站漫画资源 代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java日期小工具类">
-<meta property="og:url" content="http://example.com/2023/03/30/Java%E6%97%A5%E6%9C%9F%E5%B0%8F%E5%B7%A5%E5%85%B7%E7%B1%BB/index.html">
+<meta property="og:title" content="动漫之家《镖人》爬虫">
+<meta property="og:url" content="http://example.com/2023/03/31/%E5%8A%A8%E6%BC%AB%E4%B9%8B%E5%AE%B6%E3%80%8A%E9%95%96%E4%BA%BA%E3%80%8B%E7%88%AC%E8%99%AB/index.html">
 <meta property="og:site_name" content="nerkeler&#39;s blog">
-<meta property="og:description" content="Java 日期月份处理小工具类再sql的月份和日期查询中，可能会需要将日期或者月份相应推迟&#x2F;提前一天或一段时间，当然，这个逻辑放在sql中也是可以的，具体还是要看需求是否合适。分享三个小方法，一个是计算月份差、日期加减一&#x2F;多天、月份加减一&#x2F;多天 月份差输入参数： startMonth 字符串，格式应该为yyyy-MM对应下面SimpleDateFormat(&amp;quot">
+<meta property="og:description" content="前言初学python时写的爬虫小程序，爬取动漫之家  《镖人》漫画所有文件到本地，单线程爬取，速度一般，如果用多线程会有很大速度提升，抽取爬虫逻辑可爬全站漫画资源 代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://pic.imgdb.cn/item/64254312a682492fcc0f737e.jpg">
-<meta property="article:published_time" content="2023-03-30T08:04:00.000Z">
-<meta property="article:modified_time" content="2023-03-30T08:07:33.674Z">
+<meta property="og:image" content="https://pic.imgdb.cn/item/64264690a682492fcc501527.jpg">
+<meta property="article:published_time" content="2023-03-31T02:21:00.000Z">
+<meta property="article:modified_time" content="2023-03-31T02:36:17.795Z">
 <meta property="article:author" content="nerkeler">
+<meta property="article:tag" content="爬虫">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://pic.imgdb.cn/item/64254312a682492fcc0f737e.jpg">
+<meta name="twitter:image" content="https://pic.imgdb.cn/item/64264690a682492fcc501527.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Java日期小工具类 - nerkeler&#39;s blog</title>
+  <title>动漫之家《镖人》爬虫 - nerkeler&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -229,7 +230,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Java日期小工具类"></span>
+            <span id="subtitle" data-typed-text="动漫之家《镖人》爬虫"></span>
           
         </div>
 
@@ -240,8 +241,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-30 16:04" pubdate>
-          2023年3月30日 下午
+        <time datetime="2023-03-31 10:21" pubdate>
+          2023年3月31日 上午
         </time>
       </span>
     
@@ -252,7 +253,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.4k 字
+          2.7k 字
         
       </span>
     
@@ -263,7 +264,7 @@
         
         
         
-          20 分钟
+          23 分钟
         
       </span>
     
@@ -309,68 +310,13 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Java日期小工具类</h1>
+            <h1 style="display: none">动漫之家《镖人》爬虫</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="Java-日期月份处理小工具类"><a href="#Java-日期月份处理小工具类" class="headerlink" title="Java 日期月份处理小工具类"></a>Java 日期月份处理小工具类</h2><p>再<code>sql</code>的月份和日期查询中，可能会需要将日期或者月份相应推迟&#x2F;提前一天或一段时间，当然，这个逻辑放在<code>sql</code>中也是可以的，具体还是要看需求是否合适。分享三个小方法，一个是计算月份差、日期加减一&#x2F;多天、月份加减一&#x2F;多天</p>
-<h4 id="月份差"><a href="#月份差" class="headerlink" title="月份差"></a>月份差</h4><h6 id="输入参数："><a href="#输入参数：" class="headerlink" title="输入参数："></a>输入参数：</h6><ul>
-<li><code>startMonth</code><ul>
-<li>字符串，格式应该为<code>yyyy-MM</code>对应下面<code>SimpleDateFormat(&quot;yyyy-MM&quot;);</code>可根据需要更改格式</li>
-</ul>
-</li>
-<li><code>endMonth</code><ul>
-<li>字符串，格式应该为<code>yyyy-MM</code>对应下面<code>SimpleDateFormat(&quot;yyyy-MM&quot;);</code>可根据需要更改格式</li>
-</ul>
-</li>
-</ul>
-<h6 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h6><ul>
-<li>diff<ul>
-<li>整型，月份差值，如3月-6月  返回3</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span>  <span class="hljs-type">int</span> <span class="hljs-title function_">getMonthDiff</span><span class="hljs-params">(String startMonth, String endMonth)</span> &#123;<br>	<span class="hljs-type">DateFormat</span> <span class="hljs-variable">dateFormat</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SimpleDateFormat</span>(<span class="hljs-string">&quot;yyyy-MM&quot;</span>);<br>    <span class="hljs-type">Date</span> <span class="hljs-variable">start</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>    <span class="hljs-type">Date</span> <span class="hljs-variable">end</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>    <span class="hljs-keyword">try</span> &#123;<br>        start = dateFormat.parse(startMonth);<br>        end = dateFormat.parse(endMonth);<br>    &#125; <span class="hljs-keyword">catch</span> (ParseException e) &#123;<br>        e.printStackTrace();<br>    &#125;<br>    <span class="hljs-type">Calendar</span> <span class="hljs-variable">c1</span> <span class="hljs-operator">=</span> Calendar.getInstance();<br>    <span class="hljs-type">Calendar</span> <span class="hljs-variable">c2</span> <span class="hljs-operator">=</span> Calendar.getInstance();<br>    c1.setTime(start);<br>    c2.setTime(end);<br>    <span class="hljs-type">int</span> <span class="hljs-variable">year1</span> <span class="hljs-operator">=</span> c1.get(Calendar.YEAR);<br>    <span class="hljs-type">int</span> <span class="hljs-variable">year2</span> <span class="hljs-operator">=</span> c2.get(Calendar.YEAR);<br>    <span class="hljs-type">int</span> <span class="hljs-variable">month1</span> <span class="hljs-operator">=</span> c1.get(Calendar.MONTH);<br>    <span class="hljs-type">int</span> <span class="hljs-variable">month2</span> <span class="hljs-operator">=</span> c2.get(Calendar.MONTH);<br>    <span class="hljs-type">int</span> <span class="hljs-variable">day1</span> <span class="hljs-operator">=</span> c1.get(Calendar.DAY_OF_MONTH);<br>    <span class="hljs-type">int</span> <span class="hljs-variable">day2</span> <span class="hljs-operator">=</span> c2.get(Calendar.DAY_OF_MONTH);<br>    <span class="hljs-comment">// 获取年的差值</span><br>    <span class="hljs-type">int</span> <span class="hljs-variable">yearInterval</span> <span class="hljs-operator">=</span> year1 - year2;<br>    <span class="hljs-comment">// 如果 d1的 月-日 小于 d2的 月-日 那么 yearInterval-- 这样就得到了相差的年数</span><br>    <span class="hljs-keyword">if</span> (month1 &lt; month2 || month1 == month2 &amp;&amp; day1 &lt; day2) &#123;<br>        yearInterval--;<br>    &#125;<br>    <span class="hljs-comment">// 获取月数差值</span><br>    <span class="hljs-type">int</span> <span class="hljs-variable">monthInterval</span> <span class="hljs-operator">=</span> (month1 + <span class="hljs-number">12</span>) - month2;<br>    <span class="hljs-keyword">if</span> (day1 &lt; day2) &#123;<br>        monthInterval--;<br>    &#125;<br>    monthInterval %= <span class="hljs-number">12</span>;<br>    <span class="hljs-type">int</span> <span class="hljs-variable">monthsDiff</span> <span class="hljs-operator">=</span> Math.abs(yearInterval * <span class="hljs-number">12</span> + monthInterval);<br>    <span class="hljs-keyword">return</span> monthsDiff;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="日期加减"><a href="#日期加减" class="headerlink" title="日期加减"></a>日期加减</h4><h6 id="输入参数：-1"><a href="#输入参数：-1" class="headerlink" title="输入参数："></a>输入参数：</h6><ul>
-<li><code>day</code><ul>
-<li>字符串，日期，格式应该为<code>yyyy-MM-dd</code>对应下面<code>SimpleDateFormat(&quot;yyyy-MM-dd&quot;);</code>可根据需要更改格式</li>
-</ul>
-</li>
-<li><code>num</code><ul>
-<li>整型，偏移量   为正 时间往后加，负  时间往前推</li>
-</ul>
-</li>
-</ul>
-<h6 id="返回值-1"><a href="#返回值-1" class="headerlink" title="返回值"></a>返回值</h6><ul>
-<li>date<ul>
-<li>String，格式处理后的时间，如3月1-3月4  返回3</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> String <span class="hljs-title function_">dayFormat</span><span class="hljs-params">(String day, <span class="hljs-type">int</span> num)</span> &#123;<br>       <span class="hljs-type">DateFormat</span> <span class="hljs-variable">dateFormat</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SimpleDateFormat</span>(<span class="hljs-string">&quot;yyyy-MM-dd&quot;</span>);<br>       <span class="hljs-type">Date</span> <span class="hljs-variable">date</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>       <span class="hljs-keyword">try</span> &#123;<br>           date = dateFormat.parse(day);<br>       &#125; <span class="hljs-keyword">catch</span> (ParseException e) &#123;<br>           e.printStackTrace();<br>       &#125;<br>       <span class="hljs-type">Calendar</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> Calendar.getInstance();<br>       c.setTime(date);<br>       c.add(Calendar.DATE,num);<br>       date = c.getTime();<br>       <span class="hljs-keyword">return</span>  dateFormat.format(date);<br>   &#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="月份加减"><a href="#月份加减" class="headerlink" title="月份加减"></a>月份加减</h4><h6 id="输入参数：-2"><a href="#输入参数：-2" class="headerlink" title="输入参数："></a>输入参数：</h6><ul>
-<li><code>day</code><ul>
-<li>字符串，日期，格式应该为<code>yyyy-MM</code>对应下面<code>SimpleDateFormat(&quot;yyyy-MM&quot;);</code>可根据需要更改格式</li>
-</ul>
-</li>
-<li><code>num</code><ul>
-<li>整型，偏移量   为正 月份往后加，负  时间往前推</li>
-</ul>
-</li>
-</ul>
-<h6 id="返回值-2"><a href="#返回值-2" class="headerlink" title="返回值"></a>返回值</h6><ul>
-<li>date<ul>
-<li>String，格式处理后的时间，如3月-6月  返回3</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> String <span class="hljs-title function_">monthFormat</span><span class="hljs-params">(String month, <span class="hljs-type">int</span> num)</span> &#123;<br>       <span class="hljs-type">DateFormat</span> <span class="hljs-variable">dateFormat</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SimpleDateFormat</span>(<span class="hljs-string">&quot;yyyy-MM&quot;</span>);<br>       <span class="hljs-type">Date</span> <span class="hljs-variable">date</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>       <span class="hljs-keyword">try</span> &#123;<br>           date = dateFormat.parse(month);<br>       &#125; <span class="hljs-keyword">catch</span> (ParseException e) &#123;<br>           e.printStackTrace();<br>       &#125;<br>       <span class="hljs-type">Calendar</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> Calendar.getInstance();<br>       c.setTime(date);<br>       c.add(Calendar.MONTH,num);<br>       date = c.getTime();<br>       <span class="hljs-keyword">return</span>  dateFormat.format(date);<br>   &#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>最近太水了，已经托更一周了，这次又是水了一篇，争取下次好好写一篇</p>
-
+                <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>初学python时写的爬虫小程序，爬取动漫之家  《镖人》漫画所有文件到本地，单线程爬取，速度一般，如果用多线程会有很大速度提升，抽取爬虫逻辑可爬全站漫画资源</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> re<br><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">from</span> bs4 <span class="hljs-keyword">import</span> BeautifulSoup<br><span class="hljs-keyword">from</span> tqdm <span class="hljs-keyword">import</span> tqdm<br><br><br><span class="hljs-comment"># 获取当前漫画总链接文本</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_url</span>(<span class="hljs-params">url</span>):<br>    headers = &#123;<br>        <span class="hljs-string">&quot;User-Agent&quot;</span>: <span class="hljs-string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36&quot;</span>&#125;<br>    res = requests.get(url, headers=headers)<br>    res.encoding = res.apparent_encoding<br>    <span class="hljs-keyword">if</span> res.status_code == <span class="hljs-number">200</span>:<br>        <span class="hljs-keyword">return</span> res.text<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span><br><br><br><span class="hljs-comment"># 爬取所有章节标题、链接</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_page</span>(<span class="hljs-params">html</span>):<br>    title_list, href_list = [], []<br><br>    soups = BeautifulSoup(html, <span class="hljs-string">&quot;lxml&quot;</span>)<br>    soups = soups.find(attrs=&#123;<span class="hljs-string">&quot;class&quot;</span>: <span class="hljs-string">&quot;list_con_li autoHeight&quot;</span>&#125;)<br><br>    <span class="hljs-keyword">for</span> soup <span class="hljs-keyword">in</span> soups.select(<span class="hljs-string">&quot;li a&quot;</span>):<br>        title_list.insert(<span class="hljs-number">0</span>, soup[<span class="hljs-string">&#x27;title&#x27;</span>])<br>        href_list.insert(<span class="hljs-number">0</span>, soup[<span class="hljs-string">&#x27;href&#x27;</span>])<br><br>    <span class="hljs-keyword">return</span> title_list, href_list  <span class="hljs-comment"># 返回列表</span><br><br><br><span class="hljs-comment"># 判断是否为数字型字符串</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_number</span>(<span class="hljs-params">s</span>):<br>    <span class="hljs-keyword">try</span>:<br>        <span class="hljs-built_in">float</span>(s)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br>    <span class="hljs-keyword">except</span> ValueError:<br>        <span class="hljs-keyword">pass</span><br><br><br><span class="hljs-comment"># 爬取章节内所有图片</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main_download</span>(<span class="hljs-params">name, url</span>):<br>    headers = &#123;<br>        <span class="hljs-string">&quot;User-Agent&quot;</span>: <span class="hljs-string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36&quot;</span>,<br>        <span class="hljs-string">&quot;Referer&quot;</span>: url&#125;  <span class="hljs-comment"># 浏览器标识</span><br>    res = requests.get(url, headers=headers)<br>    html = res.text  <span class="hljs-comment"># 动态页面，返回js代码</span><br>    link = re.findall(<span class="hljs-string">&quot;function\(p,a,c,k,e,d\).*?split&quot;</span>, html)  <span class="hljs-comment"># 匹配图片代码片段</span><br>    <span class="hljs-string">&quot;&quot;&quot;解码js，构造图片真实链接&quot;&quot;&quot;</span><br>    first_number = link[<span class="hljs-number">0</span>].split(<span class="hljs-string">&quot;&#x27;.split&quot;</span>)<br>    first_number = first_number[<span class="hljs-number">0</span>].split(<span class="hljs-string">&quot;||&quot;</span>)<br>    links, second = [], []<br>    first = <span class="hljs-string">&quot;&quot;</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> first_number:<br>        number = i.split(<span class="hljs-string">&quot;|&quot;</span>)<br>        <span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> number:<br>            <span class="hljs-keyword">try</span>:<br>                <span class="hljs-keyword">if</span> is_number(num) <span class="hljs-keyword">and</span> <span class="hljs-built_in">len</span>(num) == <span class="hljs-number">4</span>:<br>                    first = num  <span class="hljs-comment"># 链接开始四位数数字串</span><br>                <span class="hljs-keyword">elif</span> is_number(num) <span class="hljs-keyword">and</span> (<span class="hljs-built_in">len</span>(num) == <span class="hljs-number">5</span> <span class="hljs-keyword">or</span> <span class="hljs-built_in">len</span>(num) == <span class="hljs-number">6</span>):<br>                    second.append(<span class="hljs-built_in">int</span>(num))  <span class="hljs-comment"># 链接中间数字串</span><br>                <span class="hljs-keyword">elif</span> is_number(num) <span class="hljs-keyword">and</span> <span class="hljs-built_in">len</span>(num) &gt;= <span class="hljs-number">7</span>:<br>                    links.append(num)  <span class="hljs-comment"># 链接末尾数字串</span><br><br>            <span class="hljs-keyword">except</span>:<br>                <span class="hljs-keyword">pass</span><br>    links = <span class="hljs-built_in">sorted</span>(links)  <span class="hljs-comment"># 由小到大排序</span><br>    <span class="hljs-comment"># 开始下载图片</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> links:<br>        imgs_link = <span class="hljs-string">f&#x27;https://images.dmzj.com/img/chapterpic/<span class="hljs-subst">&#123;first&#125;</span>/<span class="hljs-subst">&#123;second[<span class="hljs-number">0</span>]&#125;</span>/<span class="hljs-subst">&#123;i&#125;</span>.jpg&#x27;</span>  <span class="hljs-comment"># 构造真实链接</span><br><br>        response = requests.get(url=imgs_link, headers=headers)<br>        <span class="hljs-keyword">try</span>:<br>            <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">f&quot;镖人/<span class="hljs-subst">&#123;name&#125;</span>/<span class="hljs-subst">&#123;i&#125;</span>.jpg&quot;</span>, <span class="hljs-string">&#x27;wb&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>                f.write(response.content)<br>        <span class="hljs-keyword">except</span>:<br>            <span class="hljs-keyword">pass</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;name&#125;</span>: 已经下载完成&quot;</span>)<br><br><br><span class="hljs-comment"># 主循环</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.exists(<span class="hljs-string">&quot;镖人&quot;</span>):  <span class="hljs-comment"># 创建总文件夹</span><br>        os.mkdir(<span class="hljs-string">&quot;镖人&quot;</span>)<br>    url = <span class="hljs-string">&quot;https://www.dmzj.com/info/biaoren.html&quot;</span><br>    html = get_url(url)<br>    title_list, href_list = get_page(html)<br>    <span class="hljs-comment">#processing = tqdm(range(0,len(title_list)))</span><br>    <span class="hljs-keyword">for</span> name, url <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(title_list, href_list,):<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.exists(<span class="hljs-string">f&quot;镖人/<span class="hljs-subst">&#123;name&#125;</span>&quot;</span>):<br>            os.mkdir(<span class="hljs-string">f&quot;镖人/<span class="hljs-subst">&#123;name&#125;</span>&quot;</span>)<br>        main_download(name, url)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -388,7 +334,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Java/" class="category-chain-item">Java</a>
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
   
   
 
@@ -400,6 +346,13 @@
     </div>
   
   
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%88%AC%E8%99%AB/">#爬虫</a>
+      
+    </div>
+  
 </div>
 
 
@@ -408,8 +361,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Java日期小工具类</div>
-      <div>http://example.com/2023/03/30/Java日期小工具类/</div>
+      <div>动漫之家《镖人》爬虫</div>
+      <div>http://example.com/2023/03/31/动漫之家《镖人》爬虫/</div>
     </div>
     <div class="license-meta">
       
@@ -421,7 +374,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年3月30日</div>
+          <div>2023年3月31日</div>
         </div>
       
       
@@ -453,18 +406,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/03/31/%E5%8A%A8%E6%BC%AB%E4%B9%8B%E5%AE%B6%E3%80%8A%E9%95%96%E4%BA%BA%E3%80%8B%E7%88%AC%E8%99%AB/" title="动漫之家《镖人》爬虫">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">动漫之家《镖人》爬虫</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/03/20/windows%E5%AF%86%E7%A0%81%E7%AE%A1%E7%90%86%E5%99%A8/" title="windows本地密码管理器">
-                        <span class="hidden-mobile">windows本地密码管理器</span>
+                      <a href="/2023/03/30/Java%E6%97%A5%E6%9C%9F%E5%B0%8F%E5%B7%A5%E5%85%B7%E7%B1%BB/" title="Java日期小工具类">
+                        <span class="hidden-mobile">Java日期小工具类</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

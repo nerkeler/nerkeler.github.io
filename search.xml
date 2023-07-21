@@ -2375,4 +2375,67 @@
         <tag>JWT</tag>
       </tags>
   </entry>
+  <entry>
+    <title>MySQL知识网络(一)-MYSQL结构体系</title>
+    <url>/2023/07/21/MySQL%E7%9F%A5%E8%AF%86%E7%BD%91%E7%BB%9C-%E4%B8%80-MYSQL%E7%BB%93%E6%9E%84%E4%BD%93%E7%B3%BB/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="MySQL知识网络（一）"><a href="#MySQL知识网络（一）" class="headerlink" title="MySQL知识网络（一）"></a>MySQL知识网络（一）</h1><h3 id="一条SQL是怎么执行的"><a href="#一条SQL是怎么执行的" class="headerlink" title="一条SQL是怎么执行的"></a>一条SQL是怎么执行的</h3><p>入门java时观看宋红康老师的视频中有句话让我印象深刻，大处着眼，小处着手。学习一个新的技术，应该先<em><strong>鸟瞰其全貌，从高维度理解问题</strong></em>。在我们输入一个简单的SQL查询语句时，心中应该对他的整体执行流程有个概念，做到胸有成竹，才能在遇到问题时，准确定位，进而根据情况对应解决方案。而想要做到这点，不得不提的就是MYSQL结构体系。</p>
+<h3 id="MYSQL结构体系-Server层"><a href="#MYSQL结构体系-Server层" class="headerlink" title="MYSQL结构体系(Server层)"></a>MYSQL结构体系(Server层)</h3><p><img src="https://pic.imgdb.cn/item/64b8cab61ddac507ccf5b8e4.png"></p>
+<p>大体来说，MySQL可以分为Server层和存储引擎层两部分</p>
+<p>Server层包括连接器、查询缓存、分析器、优化器、执行器等，涵盖MySQL的大多数核心服务功能，以及所有的内置函数（如日期、时间、数学和加密函数等），所有跨存储引擎的功能都在这一层实现，比如存存过程、触发器、视图等。</p>
+<p>存储引擎层负责数据的存储和提取，其架构模式是插件式的，支持InnoDB、MyISAM、Memory等多个存储引擎。现在最常用的存储引擎是InnoDB,它从MySQL 5.5.5版本开始成为了默认存储引擎。</p>
+<h4 id="连接器和安全管理"><a href="#连接器和安全管理" class="headerlink" title="连接器和安全管理"></a>连接器和安全管理</h4><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql <span class="operator">-</span>h$ip <span class="operator">-</span>P$port <span class="operator">-</span>u$<span class="keyword">user</span> <span class="operator">-</span>p</span><br></pre></td></tr></table></figure>
+
+<p>使用上述命令登录mysql服务器，其中</p>
+<ul>
+<li>h （host）代表host 也就是主机ip</li>
+<li>p (port)代表端口</li>
+<li>u (user)代表用户名</li>
+<li>p (password)代表密码，-p后面没填写密码是为了在终端中不可见的输入密码，一定程度上避免密码泄露。</li>
+</ul>
+<p>我们一般使用的可视化工具需要提供的也是上述参数，如navicat</p>
+<p><img src="https://pic.imgdb.cn/item/64b9056f1ddac507ccd40880.png"></p>
+<p>除了常规的账号密码登录，也可以使用套接字（SSL）登录，一旦客户端链接成功，服务器会继续验证客户端是否具有执行某个特定查询的权限。</p>
+<h4 id="查询缓存"><a href="#查询缓存" class="headerlink" title="查询缓存"></a>查询缓存</h4><p>在建立连接后，则进入了Server层执行查询条件，而查询首先要做的就是查询缓存</p>
+<p>如上图中所示，MySQL在拿到一个查询请求后首先回到查询缓存中看看之前是否执行过这条语句。之前执行的语句及结果会以key-value形式存储在内存中，如果在缓存中找到这个查询语句的key，则直接返回value。反之则会继续后续的查询流程。</p>
+<p>直接从缓存中查询会大大提高查询效率，但是实际使用中并不推荐这么做，因为在原SQL涉及表中，如果任一表格中的数据被更新（包括新建和删除），缓存则将失效，对于更新频繁的表格，缓存命中的几率会很小。缓存的使用则适合表更新不频繁情景下。</p>
+<p><em><strong>MySQL 8.0版本直接将查询缓存的整块功能删掉了，也就是说8.0开始彻底没有缓存功能了。</strong></em></p>
+<h4 id="分析器"><a href="#分析器" class="headerlink" title="分析器"></a>分析器</h4><p>如果没有命中查询缓存，则进入分析器阶段进行此法分析和语法分析</p>
+<p>所谓词法分析就是将我们输入的一整条SQL语句，拆解成对应的表名和字段等，语法分析则是根据MySQL语法规则判断输入的SQL语句是否符合语法。</p>
+<p>举个例子，当我们输入以下SQL语句，则会收到<em><strong>“You have an error in your SQL syntax”</strong></em>的错误提醒。原因则是select少打了一个t</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">selec <span class="operator">*</span> <span class="keyword">from</span> t <span class="keyword">where</span> ID<span class="operator">=</span><span class="number">1</span>; </span><br><span class="line"></span><br><span class="line"><span class="comment">-- 1064 - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#x27;SELEC * FROM `T`&#x27; at line 1</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="优化器"><a href="#优化器" class="headerlink" title="优化器"></a>优化器</h4><p>经过了分析器，MySQL就知道你要做什么了。在开始执行之前，还要先经过优化器的处理。</p>
+<p>优化器是在表中有多个索引的时候决定使用哪个索引，或者在一个语句关联多张表的时候，决定各个表的链接顺序</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> t1 <span class="keyword">join</span> t2 <span class="keyword">using</span>(ID)  <span class="keyword">where</span> t1.c<span class="operator">=</span><span class="number">10</span> <span class="keyword">and</span> t2.d<span class="operator">=</span><span class="number">20</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>即可以先从表t1里面取出 c&#x3D;10的记录的ID值，再根据ID值关联到表t2,再判断t2里面的d的值是否等于20</li>
+<li>也可以先从t2里面取出d &#x3D; 20的ID值，再根据ID关联T1，再判断t1的c值是否等于10</li>
+</ul>
+<p>这两种执行方法的逻辑结果是一样的，但是执行的效率会有不同，而优化器的作用就是决定选择使用哪一个方案。</p>
+<h4 id="执行器"><a href="#执行器" class="headerlink" title="执行器"></a>执行器</h4><p>分析器告诉我们改做什么，优化器告诉我们改怎么做，那么执行器就是要具体去做了</p>
+<p>不过再执行之前测绘判断一下当前用户对SQL语句涉及到的表是否有执行查询的权限，如果没有，那边就会返回没有权限的错误。</p>
+<p>如果有权限，则打开表执行查询语句，执行器通过表的引擎定义，去使用这个引擎提供的接口（如InnoDB)</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">table</span> STATUS</span><br><span class="line"></span><br><span class="line"><span class="comment">-- orders	InnoDB	10	Dynamic	20	819	16384	0	0	0	21	2023-07-21 02:09:31	2023-07-21 02:10:01		utf8mb4_0900_ai_ci	</span></span><br></pre></td></tr></table></figure>
+
+<p>使用上述命令会展示当前表的信息, 其中InnoDB 表示这张表使用的引擎是InnoDB.</p>
+<p>具体查询表格的细节后续会再详细描述。</p>
+<h3 id="MySQL的存储引擎"><a href="#MySQL的存储引擎" class="headerlink" title="MySQL的存储引擎"></a>MySQL的存储引擎</h3><p>MySQL的存储引擎有很多，本文只简略介绍几个常见的，并且也不会详细介绍，只是为了做到有个印象。</p>
+<h4 id="InnoDB存储引擎"><a href="#InnoDB存储引擎" class="headerlink" title="InnoDB存储引擎"></a>InnoDB存储引擎</h4><p>InnoDB是MySQL的默认事务型存储引擎，采用MVCC支持高并发，并实现了四个标准的隔离级别。其默认的隔离级别是REPEATABLE READ（可重复读），并且通过间隙锁（next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
+<h4 id="MyISAM存储引擎"><a href="#MyISAM存储引擎" class="headerlink" title="MyISAM存储引擎"></a>MyISAM存储引擎</h4><p>再MySQL5.1及之前的版本中，MyISAM是默认的存储引擎。MyISAM提供了大量的特性，包括全文索引、压缩、控件函数（GIS)等，但MyISAM不支持事务和行级锁，而且再崩溃后无法安全恢复。</p>
+<p>现在MySQL默认引擎已经是InnoDB，所以MyISAM就不过多讨论了，需要知道的是MyISAM不支持事务，并且只支持表锁。</p>
+<h4 id="Memory引擎"><a href="#Memory引擎" class="headerlink" title="Memory引擎"></a>Memory引擎</h4><p>类似于Redis,Memory引擎把所有的数据都保存再内存中，因而查询速度很快，因为存储再内存中，所以数据再机器重启后会丢失，但是表结构会保留。</p>
+<p>当执行MySQL查询时需要使用临时表保存中间结果，这时候使用的临时表就是Memory表，不过当结果太大超出Memory表限制或者含有BLOB或者TEXT字段，临时表会转换位MyISAM表。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>通过一条SQL的执行流程，简略介绍了MySQL中的内部结构组成，包括 连接器、分析器、优化器、执行器、和MySQL的存储引擎，文章主要还是简略介绍，只是为了有个整体的概念，相关细节待后续补充</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a href="https://funnylog.gitee.io/mysql45/">林晓斌-极客时间MySQL45讲</a></p>
+<p>《高性能MySQL》</p>
+<p>《MySQL技术内幕-InnoDB存储引擎》</p>
+]]></content>
+      <categories>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
 </search>

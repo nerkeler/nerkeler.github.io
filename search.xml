@@ -2438,4 +2438,288 @@
         <tag>MySQL</tag>
       </tags>
   </entry>
+  <entry>
+    <title>SpringSecurity表单认证（一）</title>
+    <url>/2023/08/02/SpringSecurity%E8%A1%A8%E5%8D%95%E8%AE%A4%E8%AF%81%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="SpringSecurity表单认证（一）"><a href="#SpringSecurity表单认证（一）" class="headerlink" title="SpringSecurity表单认证（一）"></a>SpringSecurity表单认证（一）</h1><h2 id="新建一个SpringSecutiry项目"><a href="#新建一个SpringSecutiry项目" class="headerlink" title="新建一个SpringSecutiry项目"></a>新建一个SpringSecutiry项目</h2><p>创建一个新项目，名称任意</p>
+<p><img src="https://pic.imgdb.cn/item/64c861f01ddac507cc1a539b.png"></p>
+<p>pom文件引入依赖，版本任意。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.3.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-security<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.3.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>简略设置一下，启动文件</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DemoApplication</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(DemoApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@GetMapping(&quot;/hello&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">hello</span><span class="params">(<span class="meta">@RequestParam(value = &quot;name&quot;, defaultValue = &quot;World&quot;)</span> String name)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> String.format(<span class="string">&quot;Hello %s!&quot;</span>, name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时访问任意路径都会被拦截到  &#x2F;login 路径，呈现以下登录页面</p>
+<p><img src="https://pic.imgdb.cn/item/64c865d91ddac507cc21bc69.png"></p>
+<p>到此为止，就已经新建了一个SpringSecutiry最基本的demo</p>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>springsecutity作为重量级的安全框架（相对于shiro)，搭建起来却并没有很繁琐，其实这归功于springboot自动配置帮我们节省了繁琐的配置，springsecurity提供了很多强大的功能，但最核心的当属两方面</p>
+<ul>
+<li><strong>认证</strong> <strong>Authentication</strong></li>
+<li><strong>授权</strong> <strong>Authorization</strong></li>
+</ul>
+<p>通俗来说，认证就是你是谁，授权就是你可以作什么</p>
+<h2 id="简述认证"><a href="#简述认证" class="headerlink" title="简述认证"></a>简述认证</h2><p>springsecutiry支持多种不同的认证方式</p>
+<ul>
+<li>表单认证</li>
+<li>OAuth2.0认证</li>
+<li>SAML2.0认证</li>
+<li>CAS2.0认证</li>
+<li>RememberMe 自动认证</li>
+<li>JAAS认证</li>
+<li>OpenID 去中心化认证</li>
+<li>Pre-Authentication Scenarios 认证</li>
+<li>X509 认证</li>
+<li>HTTP Basic认证</li>
+<li>HTTP Digest认证</li>
+</ul>
+<h3 id="认证接口"><a href="#认证接口" class="headerlink" title="认证接口"></a>认证接口</h3><p>认证信息主要的操作功能由Authentication 定义</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Authentication</span> <span class="keyword">extends</span> <span class="title class_">Principal</span>, Serializable &#123;</span><br><span class="line">    Collection&lt;? <span class="keyword">extends</span> <span class="title class_">GrantedAuthority</span>&gt; getAuthorities();</span><br><span class="line"></span><br><span class="line">    Object <span class="title function_">getCredentials</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    Object <span class="title function_">getDetails</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    Object <span class="title function_">getPrincipal</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">isAuthenticated</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">setAuthenticated</span><span class="params">(<span class="type">boolean</span> var1)</span> <span class="keyword">throws</span> IllegalArgumentException;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>getAuthorities   获取用户权限</li>
+<li>getCredentials 获取用户凭证，一般来说就是密码</li>
+<li>getDetails 获取用户携带的详细信息  请求路径等</li>
+<li>getPrincipal 获取当前用户 </li>
+<li>isAuthenticated  是否认证成功</li>
+</ul>
+<p>大致看一下Authentication 的子类实现，可以看到不同的认证方式会有不同的实现类，这里先不展开说明，大致有个印象</p>
+<p><img src="https://pic.imgdb.cn/item/64c86f121ddac507cc35078a.png"></p>
+<p>认证信息由Authentication和其子类提供，而认证工作则是由AuthenticationManager接口极其子类实现</p>
+<p>AuthenticationManager接口只提供了一个认证方法。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">AuthenticationManager</span> &#123;</span><br><span class="line">    Authentication <span class="title function_">authenticate</span><span class="params">(Authentication var1)</span> <span class="keyword">throws</span> AuthenticationException;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>不同的子类也代表了不同的认证方式，只需要有个印象就够了，后面碰到会详细说明</p>
+<p><img src="https://pic.imgdb.cn/item/64c871be1ddac507cc3b3a1a.png"></p>
+<h2 id="过滤器链"><a href="#过滤器链" class="headerlink" title="过滤器链"></a>过滤器链</h2><p>在Spring Security中，认证和授权等功能都是基于过滤器完成，Spring Securiy常见的过滤器如下</p>
+<table>
+<thead>
+<tr>
+<th>过滤器</th>
+<th>过滤器作用</th>
+<th>预加载</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ChannelProcessingFilter</td>
+<td>过滤请求协议，HTTPS&#x2F;HTTP</td>
+<td>NO</td>
+</tr>
+<tr>
+<td>WebAsyncManagerIntegrationFilter</td>
+<td>将WebAsyncManager 与Spring Security 上下文进行集成</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>SecurityContextPersistenceFilter</td>
+<td>在处理请求前，将安全信息加载到SecurityContextHolder中方便后续使用，请求结束后，在擦除掉信息</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>HeaderWriterFilter</td>
+<td>头信息加入到相应中</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>CorsFilter</td>
+<td>处理跨域问题</td>
+<td>NO</td>
+</tr>
+<tr>
+<td>Csffilter</td>
+<td>处理CSRF攻击</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>LogoutFilter</td>
+<td>处理注销登录</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>OAuth2AuthorizationRequestRedirectFilter</td>
+<td>处理OAuth2认证重定向</td>
+<td>NO</td>
+</tr>
+<tr>
+<td>Saml2WebSsoAuthenticationRequestFilter</td>
+<td>处理SAML认证</td>
+<td>NO</td>
+</tr>
+<tr>
+<td>X509AuthenticationFilter</td>
+<td>处理X509认证</td>
+<td>NO</td>
+</tr>
+<tr>
+<td>AbstractPreAuthenticatedProcessingFilter</td>
+<td>处理预认证问题</td>
+<td>NO</td>
+</tr>
+<tr>
+<td>CasAuthenticationFilter</td>
+<td>处理CAS单点登录</td>
+<td>NO</td>
+</tr>
+<tr>
+<td>OAuth2LoginAuthenticationFilter</td>
+<td>处理OAuth2</td>
+<td>NO</td>
+</tr>
+<tr>
+<td>Saml2WebSsoAuthenticationFilter</td>
+<td>处理SAML认证</td>
+<td>NO</td>
+</tr>
+<tr>
+<td>UsenamePasswordAuthenticationFilter</td>
+<td>处理表单登录</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>OpenIDAuthenticationFilter</td>
+<td>处理OpenID认证</td>
+<td>NO</td>
+</tr>
+<tr>
+<td>DefaultLoginPageGenemtingFilter</td>
+<td>配置默认登录页面</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>DefaultLogoutPageGeneratingFilter</td>
+<td>配置默认注销页面</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>ConcurentSessionFilter</td>
+<td>处理Session有效期</td>
+<td>NO</td>
+</tr>
+<tr>
+<td>DigestAuthenticationFilter</td>
+<td>处理HTTP摘要认证</td>
+<td>NO</td>
+</tr>
+<tr>
+<td>BearerTokenAuthenticationFilter</td>
+<td>处理OAuth2认证时的Access Token</td>
+<td>NO</td>
+</tr>
+<tr>
+<td>BasicAuthenticationFilter</td>
+<td>处理HttpBasic登录</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>RequestCacheAwareFilter</td>
+<td>处理请求缓存</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>SecurityContextHolderAwareRequestFilter</td>
+<td>包装原始请求</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>JaasApiIntegrationFilter</td>
+<td>处理JAAS认证</td>
+<td>NO</td>
+</tr>
+<tr>
+<td>RememberMeAuthenticationFilter</td>
+<td>处理RememberMe登录</td>
+<td>NO</td>
+</tr>
+<tr>
+<td>AnonymousAuthenticationFilter</td>
+<td>配置匿名认证</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>OAuth2AuthorizationCodeGrantFilter</td>
+<td>处理OAuth2认证中的授权码</td>
+<td>NO</td>
+</tr>
+<tr>
+<td>SessionManagementFilter</td>
+<td>处理Session并发问题</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>ExceptionTranslationFilter</td>
+<td>池异常认证&#x2F;授权中的情况</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>FilterSecurityInterceptor</td>
+<td>处理授权</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>SwitchUserFilter</td>
+<td>处理账户切换</td>
+<td>NO</td>
+</tr>
+</tbody></table>
+<p>Spring Security提供的功能基本都是由上述过滤器来实现的，这些过滤器按照既定的优先级排列形成过滤器链。当然开发者也可以自定义过滤器的位置，这里暂不讨论。</p>
+<h2 id="Spring-Security登录认证"><a href="#Spring-Security登录认证" class="headerlink" title="Spring Security登录认证"></a>Spring Security登录认证</h2><p>上图中新建了一个最基本的Spring Security demo ，在访问&#x2F;hello的时候，会自动重定向到&#x2F;login页面，并且需要输入账号密码登录</p>
+<p>而在启动时，发现终端上打印了一行</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">Using generated security password: 535d2c4d-44eb-4808-8ae1-f272b9317b29</span><br></pre></td></tr></table></figure>
+
+<p>也就是Spring Security 随机生成的密码（uuid） 默认用户名为user。</p>
+<h3 id="流程分析"><a href="#流程分析" class="headerlink" title="流程分析"></a>流程分析</h3><p>上述流程以图标的方式展现如下</p>
+<p><img src="https://pic.imgdb.cn/item/64c8c3661ddac507ccdcbe59.png"></p>
+<ol>
+<li>客户端（浏览器）发起请求  <code>/hello</code> 接口，由于引入了<code>Spring Security</code>，登录需要认证</li>
+<li>请求会走一遍<code>Spring Security</code> 中的过滤链，在最后的<code>FilterSecurityInterceptor</code>过滤其中被拦截下来，因为系统发现用户未认证。请求拦截下拉后会抛出 <code>AccessDeniedException</code> 异常</li>
+<li>抛出的<code>AccessDeniedException</code> 异常 在 <code>ExceptionTranslationFilter</code>过滤器中被捕获，<code>ExceptionTranslationFilter</code> 过滤器通过调用 <code>LoginUrlAuthenticationEntryPoint</code>中 <code>commmence</code>方法返回客户端302，要求客户端重定向到&#x2F;login页面</li>
+<li>客户端重新发送 &#x2F;login请求</li>
+<li>&#x2F;login 请求被 <code>DefaultLoginPageGeneratingFilter</code>过滤器拦截下来，并在该过滤器中返回登录页面。</li>
+</ol>
+<h3 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h3><h4 id="FilterSecurityInterceptor"><a href="#FilterSecurityInterceptor" class="headerlink" title="FilterSecurityInterceptor"></a>FilterSecurityInterceptor</h4><p>当过滤链执行到<code>FilterSecurityInterceptor</code>时，会调用<code>doFilter</code>方法如下，可以看到主要调用了<code>invoke</code>方法，<code>FilterInvocation</code>分装了当前请求信息。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilter</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">    <span class="type">FilterInvocation</span> <span class="variable">fi</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FilterInvocation</span>(request, response, chain);</span><br><span class="line">    <span class="built_in">this</span>.invoke(fi);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>invoke()</code>方法中，它会调用<code>beforeInvocation()</code>方法，该方法是<code>AbstractSecurityInterceptor</code>的一个抽象方法，具体的实现由子类提供。<code>beforeInvocation()</code>方法会调用<code>AccessDecisionManager</code>来进行访问决策。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">invoke</span><span class="params">(FilterInvocation fi)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">    <span class="keyword">if</span> (fi.getRequest() != <span class="literal">null</span> &amp;&amp; fi.getRequest().getAttribute(<span class="string">&quot;__spring_security_filterSecurityInterceptor_filterApplied&quot;</span>) != <span class="literal">null</span> &amp;&amp; <span class="built_in">this</span>.observeOncePerRequest) &#123;</span><br><span class="line">        fi.getChain().doFilter(fi.getRequest(), fi.getResponse());</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (fi.getRequest() != <span class="literal">null</span> &amp;&amp; <span class="built_in">this</span>.observeOncePerRequest) &#123;</span><br><span class="line">            fi.getRequest().setAttribute(<span class="string">&quot;__spring_security_filterSecurityInterceptor_filterApplied&quot;</span>, Boolean.TRUE);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">InterceptorStatusToken</span> <span class="variable">token</span> <span class="operator">=</span> <span class="built_in">super</span>.beforeInvocation(fi);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            fi.getChain().doFilter(fi.getRequest(), fi.getResponse());</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="built_in">super</span>.finallyInvocation(token);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">super</span>.afterInvocation(token, (Object)<span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>beforeInvocation</code>方法中并不会直接抛出异常。相反，它会委托给<code>AccessDecisionManager</code>来进行访问决策。如果访问决策失败，<code>AccessDecisionManager</code>将抛出<code>AccessDeniedException</code>异常，表示访问被拒绝。主要语句是</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.accessDecisionManager.decide(authenticated, object, attributes);</span><br><span class="line">&#125; <span class="keyword">catch</span> (AccessDeniedException var7) &#123;</span><br><span class="line">    <span class="built_in">this</span>.publishEvent(<span class="keyword">new</span> <span class="title class_">AuthorizationFailureEvent</span>(object, attributes, authenticated, var7));</span><br><span class="line">    <span class="keyword">throw</span> var7;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里，<code>FilterSecurityInterceptor</code>会检查用户的认证状态和权限，然后调用<code>AccessDecisionManager</code>的<code>decide</code>方法来进行访问决策。</p>
+<p>这里默认的决策器是<code>AffirmativeBased</code>，相关代码为</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(var5.hasNext()) &#123;</span><br><span class="line">    <span class="type">AccessDecisionVoter</span> <span class="variable">voter</span> <span class="operator">=</span> (AccessDecisionVoter)var5.next();</span><br><span class="line">    <span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> voter.vote(authentication, object, configAttributes);</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span>.logger.isDebugEnabled()) &#123;</span><br><span class="line">        <span class="built_in">this</span>.logger.debug(<span class="string">&quot;Voter: &quot;</span> + voter + <span class="string">&quot;, returned: &quot;</span> + result);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span>(result) &#123;</span><br><span class="line">    <span class="keyword">case</span> -<span class="number">1</span>:</span><br><span class="line">        ++deny;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (deny &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">AccessDeniedException</span>(<span class="built_in">this</span>.messages.getMessage(<span class="string">&quot;AbstractAccessDecisionManager.accessDenied&quot;</span>, <span class="string">&quot;Access is denied&quot;</span>));</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.checkAllowIfAllAbstainDecisions();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>AffirmativeBased</code>: 如果任何一个访问决策器返回<code>ACCESS_GRANTED</code>（访问允许），则决策通过；否则，如果所有访问决策器都返回<code>ACCESS_ABSTAIN</code>（弃权）或没有决策器，那么访问也会被允许。</p>
+<p><code>AffirmativeBased</code> 默认传入的构造器只有一个 <code>WebExpressionVoter</code>，这个构造器会根据你在配置文件中的配置进行逻辑处理得出投票结果，这里返回 -1，deny &gt; 0 直接抛出异常。</p>
+<h4 id="ExceptionTranslationFilter"><a href="#ExceptionTranslationFilter" class="headerlink" title="ExceptionTranslationFilter"></a>ExceptionTranslationFilter</h4><p><code>ExceptionTranslationFilter</code> 捕获<code>FilterSecurityInterceptor</code>抛出的<code>AccessDeniedException</code>异常，通过调用 <code>LoginUrlAuthenticationEntryPoint</code>中 <code>commmence</code>方法返回客户端302，要求客户端重定向到&#x2F;login页面。</p>
+<p>这里走的是<code>catch(Excception var10)</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilter</span><span class="params">(ServletRequest req, ServletResponse res, FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">    <span class="type">HttpServletRequest</span> <span class="variable">request</span> <span class="operator">=</span> (HttpServletRequest)req;</span><br><span class="line">    <span class="type">HttpServletResponse</span> <span class="variable">response</span> <span class="operator">=</span> (HttpServletResponse)res;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        chain.doFilter(request, response);</span><br><span class="line">        <span class="built_in">this</span>.logger.debug(<span class="string">&quot;Chain processed normally&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException var9) &#123;</span><br><span class="line">        <span class="keyword">throw</span> var9;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception var10) &#123;</span><br><span class="line">    ...........</span><br><span class="line"></span><br><span class="line">        <span class="built_in">this</span>.handleSpringSecurityException(request, response, chain, (RuntimeException)ase);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>handleSpringSecurityException</code>方法主要是禁止访问和重定向</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">handleSpringSecurityException</span><span class="params">(HttpServletRequest request, HttpServletResponse response, FilterChain chain, RuntimeException exception)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">    <span class="keyword">if</span> (exception <span class="keyword">instanceof</span> AuthenticationException) &#123;</span><br><span class="line">        <span class="built_in">this</span>.logger.debug(<span class="string">&quot;Authentication exception occurred; redirecting to authentication entry point&quot;</span>, exception);</span><br><span class="line">        <span class="built_in">this</span>.sendStartAuthentication(request, response, chain, (AuthenticationException)exception);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (exception <span class="keyword">instanceof</span> AccessDeniedException) &#123;</span><br><span class="line">        <span class="type">Authentication</span> <span class="variable">authentication</span> <span class="operator">=</span> SecurityContextHolder.getContext().getAuthentication();</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">this</span>.authenticationTrustResolver.isAnonymous(authentication) &amp;&amp; !<span class="built_in">this</span>.authenticationTrustResolver.isRememberMe(authentication)) &#123;</span><br><span class="line">            <span class="built_in">this</span>.logger.debug(<span class="string">&quot;Access is denied (user is not anonymous); delegating to AccessDeniedHandler&quot;</span>, exception);</span><br><span class="line">            <span class="built_in">this</span>.accessDeniedHandler.handle(request, response, (AccessDeniedException)exception);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.logger.debug(<span class="string">&quot;Access is denied (user is &quot;</span> + (<span class="built_in">this</span>.authenticationTrustResolver.isAnonymous(authentication) ? <span class="string">&quot;anonymous&quot;</span> : <span class="string">&quot;not fully authenticated&quot;</span>) + <span class="string">&quot;); redirecting to authentication entry point&quot;</span>, exception);</span><br><span class="line">            <span class="built_in">this</span>.sendStartAuthentication(request, response, chain, <span class="keyword">new</span> <span class="title class_">InsufficientAuthenticationException</span>(<span class="built_in">this</span>.messages.getMessage(<span class="string">&quot;ExceptionTranslationFilter.insufficientAuthentication&quot;</span>, <span class="string">&quot;Full authentication is required to access this resource&quot;</span>)));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>显而易见这里走的是 <code>this.sendStartAuthentication(request, response, chain, new InsufficientAuthenticationException(this.messages.getMessage(&quot;ExceptionTranslationFilter.insufficientAuthentication&quot;, &quot;Full authentication is required to access this resource&quot;)));</code></p>
+<p>而<code>sendStartAuthentication</code>实际上调用的就是<code>LoginUrlAuthenticationEntryPoint</code>的<code>commence</code>方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">sendStartAuthentication</span><span class="params">(HttpServletRequest request, HttpServletResponse response, FilterChain chain, AuthenticationException reason)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">    SecurityContextHolder.getContext().setAuthentication((Authentication)<span class="literal">null</span>);</span><br><span class="line">    <span class="built_in">this</span>.requestCache.saveRequest(request, response);</span><br><span class="line">    <span class="built_in">this</span>.logger.debug(<span class="string">&quot;Calling Authentication entry point.&quot;</span>);</span><br><span class="line">    <span class="built_in">this</span>.authenticationEntryPoint.commence(request, response, reason);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>commence</code>真正实现了由<code>Spring Security</code> 提供的默认<code>/login</code> 路径的重定向</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">commence</span><span class="params">(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">redirectUrl</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span>.useForward) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.forceHttps &amp;&amp; <span class="string">&quot;http&quot;</span>.equals(request.getScheme())) &#123;</span><br><span class="line">            redirectUrl = <span class="built_in">this</span>.buildHttpsRedirectUrlForRequest(request);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (redirectUrl == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">loginForm</span> <span class="operator">=</span> <span class="built_in">this</span>.determineUrlToUseForThisRequest(request, response, authException);</span><br><span class="line">            <span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</span><br><span class="line">                logger.debug(<span class="string">&quot;Server side forward to: &quot;</span> + loginForm);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="type">RequestDispatcher</span> <span class="variable">dispatcher</span> <span class="operator">=</span> request.getRequestDispatcher(loginForm);</span><br><span class="line">            dispatcher.forward(request, response);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        redirectUrl = <span class="built_in">this</span>.buildRedirectUrlToLoginPage(request, response, authException);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">this</span>.redirectStrategy.sendRedirect(request, response, redirectUrl);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="DefaultLoginPageGeneratingFilter"><a href="#DefaultLoginPageGeneratingFilter" class="headerlink" title="DefaultLoginPageGeneratingFilter"></a>DefaultLoginPageGeneratingFilter</h4><p>经过上述重定向操作，客户端重新发起请求&#x2F;hello，这个请求会在<code>DefaultLoginPageGeneratingFilter</code>被拦截下拉，并返回默认的登录页面</p>
+<p><code>DefaultLoginPageGeneratingFilter</code>的操作要简单些，当匹配到登录操作的时候（else)，会发送默认生成的页面，也就是我们看到的demo 登录页。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilter</span><span class="params">(ServletRequest req, ServletResponse res, FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">    <span class="type">HttpServletRequest</span> <span class="variable">request</span> <span class="operator">=</span> (HttpServletRequest)req;</span><br><span class="line">    <span class="type">HttpServletResponse</span> <span class="variable">response</span> <span class="operator">=</span> (HttpServletResponse)res;</span><br><span class="line">    <span class="type">boolean</span> <span class="variable">loginError</span> <span class="operator">=</span> <span class="built_in">this</span>.isErrorPage(request);</span><br><span class="line">    <span class="type">boolean</span> <span class="variable">logoutSuccess</span> <span class="operator">=</span> <span class="built_in">this</span>.isLogoutSuccess(request);</span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">this</span>.isLoginUrlRequest(request) &amp;&amp; !loginError &amp;&amp; !logoutSuccess) &#123;</span><br><span class="line">        chain.doFilter(request, response);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 顾名思义，生成默认页面，详细代码可以点开generateLoginPageHtml方法</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">loginPageHtml</span> <span class="operator">=</span> <span class="built_in">this</span>.generateLoginPageHtml(request, loginError, logoutSuccess);</span><br><span class="line">        response.setContentType(<span class="string">&quot;text/html;charset=UTF-8&quot;</span>);</span><br><span class="line">        response.setContentLength(loginPageHtml.getBytes(StandardCharsets.UTF_8).length);</span><br><span class="line">        response.getWriter().write(loginPageHtml);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>至此，解释了从输入<code>/hello</code> 到 重定向到 <code>/login</code>代码的原理，由于它的实现过程非常复杂，这里也只是定位到本次请求经过的代码链路操作。</p>
+<p>除此之外，还有一个问题，就是生成了默认的登录页，那在哪里生成的默认账号和密码呢？后续将继续介绍</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>《深入浅出Spring Security》王松</p>
+]]></content>
+      <categories>
+        <category>SpringSecurity</category>
+      </categories>
+      <tags>
+        <tag>SpringSecurity</tag>
+        <tag>spring</tag>
+      </tags>
+  </entry>
 </search>
